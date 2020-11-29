@@ -21,7 +21,7 @@ export class Aq {
   ]
   public xC: any = {
     Font: 0,
-    FontSize: 24,
+    FontSize: 48,
     FauxBold: false,
     FauxItalic: false,
     AutoLeading: true,

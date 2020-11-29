@@ -15,7 +15,7 @@ class Curved {
   private static font: any = null;
 
   public async start() {
-    await this.load("fonts/LiberationSans-Bold.ttf", this.fontLoaded);
+    await this.load("fonts/DejaVuSans.otf", this.fontLoaded);
   }
 
   public load(path: any, resp: any, responseType: any = 'arraybuffer') {
@@ -63,7 +63,6 @@ class Curved {
     // console.log(scale)
     // ctx.scale(scale, -scale);
     // let p = path;
-    debugger
     if (!n.Lq_ZE(this.TySh.ct)) {
       let V = this.p_Tj1(path.crds);
       path = this.p_uX1(path);
@@ -138,7 +137,6 @@ class Curved {
   }
 
   public ts(O: any, IW: any, p: any) {
-    debugger
     if (p == null)
       p = !1;
     let V = this.TySh;
@@ -149,9 +147,9 @@ class Curved {
     //     var E = NK.$I(V.mp);
     //     this.RH.value = E.slice(0, E.length - 1)
     // }
-    const path = OP.Hf(aV, V)
-    return path
-    // var u = this.$b(aV, V, ctx)
+    // const path = OP.Hf(aV, V)
+    // return path
+    return this.$b(aV, V)
     // , F = u.rect;
     // if (n.Lq.ZE(V.ct))
     //     V.Wr = new R;
@@ -174,7 +172,14 @@ class Curved {
   }
 
 
-  private $b(O: any, i: any, ctx: any) {
+  private $b(O: any, i: any) {
+    let p = OP.Hf(O, i);
+    let u = n.p_iG(p.b);
+    return {
+      p,
+      u
+    }
+    // return path;
     // let p = O.zg(), y;
     // if (p.x == Infinity || p.zk())
     //   return {
@@ -191,6 +196,8 @@ class Curved {
     //     rect: new R,
     //     Wr: new R
     //   };
+
+    // console.log(u)
 
     // var F = f.L("canvas", "");
     // F.width = u.m;

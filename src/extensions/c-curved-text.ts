@@ -160,12 +160,11 @@ class CorjlCurvedText extends fabric.IText {
   // async _render(ctx: CanvasRenderingContext2D) {
   //   super._render(ctx);
   //   ctx.save();
-  //   await curved.start(this.canvas);
+  //   await curved.start();
   //   // @ts-ignore
   //   const Y = curved.initCurved();
   //   let e = new Point();
   //   let aq = new Aq();
-  //   // let vm = this;
   //   curved.initTySh(e, aq);
   //   let obj = {
   //     warpStyle: 'warpArc',
@@ -182,7 +181,9 @@ class CorjlCurvedText extends fabric.IText {
   //     RH.selectionStart++;
   //     // @ts-ignore
   //     RH.value += this.originalText[i];
-  //     const path = curved.startCurved(RH, Y);
+  //     // const path = curved.startCurved(RH, Y);
+  //     // @ts-ignore
+  //     const { p, u } = curved.startCurved(RH, Y);
   //     const F = document.getElementById("canvas");
   //     // @ts-ignore
   //     F.width = this.canvas?.width;
@@ -190,11 +191,11 @@ class CorjlCurvedText extends fabric.IText {
   //     F.height = this.canvas?.height;
   //     // @ts-ignore
   //     const ctx = this.canvas?.getContext('2d');
-  //     console.log(path)
+  //     // console.log(path)
   //     // @ts-ignore
   //     this.pathToContext({
-  //       crds: path.b,
-  //       cmds: path.J
+  //       crds: p.b,
+  //       cmds: p.J
   //     }, ctx)
   //   }
   // }
@@ -213,7 +214,7 @@ class CorjlCurvedText extends fabric.IText {
     }
     curved.onChangeTySh(obj);
 
-    curved.drawWord(ctx, Y, this.fontSize, left, top);
+    // curved.drawWord(ctx, Y, this.fontSize, left, top);
 
     // const font = await Opentype.load('fonts/Roboto-Black.ttf');
     // // @ts-ignore
@@ -227,7 +228,7 @@ class CorjlCurvedText extends fabric.IText {
     //   path =  curved.p_up(path, Math.min(V.m, V.Q) / 8);
     //   let E = NK.Jx(curved.TySh, aV)
     //   let u = n.Lq_Is(curved.TySh.ct, E);
-    //   // n.apply(u, p.b, E)
+    //   // n.apply(u, path.crds, E)
     // }
     // this.drawTest(path, ctx);
 
@@ -235,7 +236,7 @@ class CorjlCurvedText extends fabric.IText {
     //   return data;
     // }), 'json');
 
-    // let data1 = curved.drawWord(ctx);
+    // // let data1 = curved.drawWord(ctx);
 
     // debugger
     // const aV = new OA(curved.TySh.mp, Y);
@@ -270,40 +271,48 @@ class CorjlCurvedText extends fabric.IText {
 
     // // let scale = (size * this.getDPR()) / Curved.font.head.unitsPerEm;
     
-    // ctx.translate(- (187 + 32), - (202 - 16));
-    // ctx.fillStyle = "#000000";
-    // ctx.scale(1, 1);
+    // ctx.translate(-202, -187);
+    // // ctx.fillStyle = "#000000";
+    // // ctx.scale(1, 1);
     // this.pathToContext(data, ctx);
     // ctx.scale(0.6, 0.6);
 
-    // const path = curved.drawWord(ctx);
-    // console.log(path)
-    
-    // let RH = {
-    //   selectionStart: 0,
-    //   value: ''
-    // }
+    // let data2 = await curved.load("data2.json", ((data: any) =>{
+    //   return data;
+    // }), 'json');
+
+    // // let scale = (size * this.getDPR()) / Curved.font.head.unitsPerEm;
     // // @ts-ignore
-    // for(let i = 0; i < this.originalText?.length; i++) {
-    //   RH.selectionStart++;
-    //   // @ts-ignore
-    //   RH.value += this.originalText[i];
-    //   const path = curved.startCurved(RH, Y);
-    //   const F = document.getElementById("canvas");
-    //   // @ts-ignore
-    //   F.width = this.canvas?.width;
-    //   // @ts-ignore
-    //   F.height = this.canvas?.height;
-    //   // @ts-ignore
-    //   const ct = this.canvas?.getContext('2d');
-    //   console.log(path)
-    //   // @ts-ignore
-    //   this.pathToContext({
-    //     crds: path.b,
-    //     cmds: path.J
-    //   }, ct)
-    // }
-    if (this.canvas) this.canvas.requestRenderAll();
+    // ctx.translate(-(207 + this.fontSize), -(193 - (this.fontSize/4)));
+    // this.pathToContext(data2, ctx);
+    
+    let RH = {
+      selectionStart: 0,
+      value: ''
+    }
+    let path: any;
+    let rect: any;
+    // @ts-ignore
+    for(let i = 0; i < _char.length; i++) {
+      RH.selectionStart++;
+      RH.value += _char[i];
+      // @ts-ignore
+      const { p, u } = curved.startCurved(RH, Y);
+      path = p;
+      rect = u;
+    }
+    if(path) {
+      this.width = rect.m;
+      this.height = rect.Q;
+      // @ts-ignore
+      ctx.translate(-(rect.x + rect.m/2), -(rect.y + rect.Q/2));
+      this.pathToContext({
+        crds: path.b,
+        cmds: path.J
+      }, ctx)
+      
+    }
+    if (this.canvas) this.canvas.renderAll();
   }
 
   toObject(propertiesToInclude?: string[]): any {

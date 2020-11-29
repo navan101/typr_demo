@@ -34,11 +34,12 @@ export default {
       // @ts-ignore
       // load("fonts/LiberationSans-Bold.ttf", fontLoaded);
 
-      const text1 = new fabric.CJCurvedText('navan', {
-        top: 200,
-        left: 200,
-        fontSize: 24,
-        fontFamily: 'LiberationSans-Bold'
+      const text1 = new fabric.CJCurvedText('nguyen anh van', {
+        top: 100,
+        left: 100,
+        fontSize: 48,
+        fontFamily: 'LiberationSans-Bold',
+        textAlign: 'center'
       })
       // @ts-ignore
       canvas.value.add(text1);

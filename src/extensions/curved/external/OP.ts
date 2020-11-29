@@ -5,22 +5,21 @@ import { R } from './R';
 
 export class OP {
   public static Hf(O: any, i: any) {
-    debugger
     var p: any = {
       J: [],
       b: []
     };
     OP.fjK(O, p);
-    // if (!n.Lq_ZE(i.ct)) {
-    //   var V = n.p_Tj(p.b);
-    //   p = n.p_uX(p);
-    //   p = n.p_up(p, Math.min(V.m, V.Q) / 8);
-    //   var E = NK.Jx(i, O)
-    //     , u = n.Lq_Is(i.ct, E);
-    //   n.apply(u, p.b, E)
-    // }
-    // var F = i.F;
-    // n.p_F(p.b, F, p.b);
+    if (!n.Lq_ZE(i.ct)) {
+      var V = n.p_Tj(p.b);
+      p = n.p_uX(p);
+      p = n.p_up(p, Math.min(V.m, V.Q) / 8);
+      var E = NK.Jx(i, O)
+        , u = n.Lq_Is(i.ct, E);
+      n.apply(u, p.b, E)
+    }
+    var F = i.F;
+    n.p_F(p.b, F, p.b);
     return p
   }
   ;

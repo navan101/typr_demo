@@ -38,7 +38,6 @@ class n {
   ;
 
   public apply(O: any, i: any, p: any) {
-    debugger
     var V = p.x
       , E = p.y
       , u = 1 / p.m

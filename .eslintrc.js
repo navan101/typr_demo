@@ -32,6 +32,7 @@ module.exports = {
     'no-constant-condition': 'off',
     'no-extra-semi': 'off',
     '@typescript-eslint/no-this-alias': 'off',
-    'no-useless-catch': 'off'
+    'no-useless-catch': 'off',
+    'no-control-regex': 'off'
   },
 }
