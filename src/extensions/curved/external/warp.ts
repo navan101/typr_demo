@@ -1,8 +1,8 @@
-import { ND } from './ND';
-import { R } from './R';
+import { Path } from './path';
+import { Rect } from './rect';
 
-class n {
-  public Tm(O: any) {
+class Warp {
+  public color(O: any) {
     var i = O.toString(16);
     while (i.length < 6)
       i = "0" + i;
@@ -40,8 +40,8 @@ class n {
   public apply(O: any, i: any, p: any) {
     var V = p.x
       , E = p.y
-      , u = 1 / p.m
-      , F = 1 / p.Q
+      , u = 1 / p.w
+      , F = 1 / p.h
       , m = this.tC;
     for (var y = 0; y < i.length; y += 2) {
       var z = (i[y] - V) * u
@@ -122,7 +122,7 @@ class n {
     i[9] = V
   }
 
-  public Lq_ZE(O: any) {
+  public checkWarpStyle(O: any) {
     var i = O.warpStyle.v.warpStyle;
     if (i == "warpNone")
       return !0;
@@ -141,8 +141,8 @@ class n {
       return O.warpValue.v == 0 && O.warpPerspective.v == 0 && O.warpPerspectiveOther.v == 0
   }
 
-  public Lq_U(O?: any) {
-    var i: any = {
+  public initContent(rect?: Rect) {
+    var ct: any = {
       classID: "warp",
       warpStyle: {
         t: "enum",
@@ -169,8 +169,8 @@ class n {
         }
       }
     };
-    if (O) {
-      i.bounds = {
+    if (rect) {
+      ct.bounds = {
         t: "Objc",
         v: {
           classID: "Rctn",
@@ -178,56 +178,56 @@ class n {
             t: "UntF",
             v: {
               type: "#Pxl",
-              val: O.y
+              val: rect.y
             }
           },
           Left: {
             t: "UntF",
             v: {
               type: "#Pxl",
-              val: O.x
+              val: rect.x
             }
           },
           Btom: {
             t: "UntF",
             v: {
               type: "#Pxl",
-              val: O.y + O.Q
+              val: rect.y + rect.h
             }
           },
           Rght: {
             t: "UntF",
             v: {
               type: "#Pxl",
-              val: O.x + O.m
+              val: rect.x + rect.w
             }
           }
         }
       };
-      i.uOrder = {
+      ct.uOrder = {
         t: "long",
         v: 4
       };
-      i.vOrder = {
+      ct.vOrder = {
         t: "long",
         v: 4
       }
     }
-    return i
+    return ct
   }
 
 
-  public Lq_Is(O: any, i: any) {
-    if (i == null) {
+  public warpStyle(O: any, rect: Rect) {
+    if (rect == null) {
       var p = O.bounds.v
         , V = p.Left.v.val
         , E = p.Rght.v.val
         , u = p.Top.v.val
         , F = p.Btom.v.val;
-      i = new R(V, u, E - V, F - u)
+      rect = new Rect(V, u, E - V, F - u)
     }
-    if (i.zk())
-      i.m = i.Q = 1;
+    if (rect.check())
+      rect.w = rect.h = 1;
     var m = []
       , y = O.warpStyle.v.warpStyle;
     if (y == "warpCustom") {
@@ -237,55 +237,55 @@ class n {
       for (var G = 0; G < 16; G++)
         m.push(_[G], W[G])
     } else
-      m = this.Lq_Lq(i, y, O.warpRotate.v.Ornt == "Hrzn", O.warpValue.v / 100, O.warpPerspective.v / 100, O.warpPerspectiveOther.v / 100);
+      m = this.calculatorWarpStyle(rect, y, O.warpRotate.v.Ornt == "Hrzn", O.warpValue.v / 100, O.warpPerspective.v / 100, O.warpPerspectiveOther.v / 100);
     return m
   }
   ;
-  public Lq_Lq(O: any, i: any, p: any, V: any, E: any, u: any) {
-    var F = this.Bc_U(O.x, O.y, O.m, O.Q);
+  public calculatorWarpStyle(rect: Rect, i: any, p: any, V: any, E: any, u: any) {
+    var F = this.Bc_U(rect.x, rect.y, rect.w, rect.h);
     if (i == "warpNone")
       return F;
-    var m = JSON.parse(JSON.stringify(O))
-      , y = new ND;
+    var m = JSON.parse(JSON.stringify(rect))
+      , y = new Path;
     if (!p) {
-      y.translate(-O.x, -O.y);
+      y.translate(-rect.x, -rect.y);
       y.rotate(-Math.PI / 2);
-      y.translate(O.Q, 0);
-      this.p_F(F, y, F);
-      O = new R(0, 0, O.Q, O.m);
+      y.translate(rect.h, 0);
+      this.mapPathCurves(F, y, F);
+      rect = new Rect(0, 0, rect.h, rect.w);
       F = this.Bc_R_(F, !1)
     }
-    this.Lq_fuT(F, O, i, V, E, u);
+    this.calculatorWarp(F, rect, i, V, E, u);
     if (!p) {
       F = this.Bc_R_(F, !0);
-      O = m;
-      y.hA();
-      this.p_F(F, y, F)
+      rect = m;
+      y.setPathXY();
+      this.mapPathCurves(F, y, F)
     }
     if (V == 0)
-      this.Lq_fuW(F, O, E, u);
+      this.Lq_fuW(F, rect, E, u);
     else {
-      var y = new ND(1 / O.m, 0, 0, 1 / O.Q, -O.x, -O.y);
+      var y = new Path(1 / rect.w, 0, 0, 1 / rect.h, -rect.x, -rect.y);
       y.translate(-.5, -.5);
-      this.p_F(F, y, F);
+      this.mapPathCurves(F, y, F);
       this.Lq_fnj(F, u, E);
-      y.hA();
-      this.p_F(F, y, F)
+      y.setPathXY();
+      this.mapPathCurves(F, y, F)
     }
     return F
   }
   ;
-  public Lq_fuT(O: any, i: any, p: any, V: any, E: any, u: any) {
+  public calculatorWarp(O: any, rect: Rect, p: any, V: any, E: any, u: any) {
     for (var F = 0; F < 4; F++) {
       for (var m = 0; m < 4; m++) {
         var y = 2 * (4 * F + m)
-          , z = O[y] - i.x
-          , _ = O[y + 1] - i.y
+          , z = O[y] - rect.x
+          , _ = O[y + 1] - rect.y
           , W = z
           , G = _;
         if (V != 0) {
-          var J = i.m / 2
-            , v = i.Q / 2;
+          var J = rect.w / 2
+            , v = rect.h / 2;
           W -= J;
           G -= v;
           var j = W
@@ -298,11 +298,11 @@ class n {
             , g = Math.atan2(1, T)
             , L = W / J * g
             , a = J * b
-            , x = J * b + i.Q
+            , x = J * b + rect.h
             , K = Math.cos(g)
             , U = Math.sin(g)
-            , Y = this.Lq_fnA(K, U)
-            , $ = this.Lq_fnE(K, U)
+            , Y = (4 - K) * (1 / 3)
+            , $ = (1 - K) * (3 - K) / (3 * U)
             , e = -T * J + Y * a;
           if (p == "warpArc") {
             j = Math.sin(L) * x;
@@ -361,7 +361,7 @@ class n {
               r = -v + V * v * 4;
             P = r + 2 * v
           }
-          var d = (G + v) / i.Q;
+          var d = (G + v) / rect.h;
           W = j + d * (D - j);
           G = r + d * (P - r);
           if (p == "warpWave") {
@@ -444,20 +444,12 @@ class n {
         }
         z = W,
           _ = G;
-        O[y] = z + i.x;
-        O[y + 1] = _ + i.y
+        O[y] = z + rect.x;
+        O[y + 1] = _ + rect.y
       }
     }
   }
-  ;
-  public Lq_fnA(O: any, i: any) {
-    return (4 - O) * (1 / 3)
-  }
-  ;
-  public Lq_fnE(O: any, i: any) {
-    return (1 - O) * (3 - O) / (3 * i)
-  }
-  ;
+  
   public Lq_fnj(O: any, i: any, p: any) {
     var V = [];
     for (var E = 0; E < 4; E++)
@@ -582,20 +574,20 @@ class n {
   }
   ;
 
-  public p_concat(O: any, i: any, p: any) {
+  public concat(O: any, i: any, p: Path) {
     if (p == null)
-      p = new ND;
+      p = new Path;
     for (var V = 0; V < i.b.length; V += 2) {
       var E = i.b[V]
         , u = i.b[V + 1];
-      O.b.push(E * p.M + u * p.zh + p.$A);
-      O.b.push(E * p.Z + u * p.zI + p.OM)
+      O.b.push(E * p.x + u * p.x1 + p.x2);
+      O.b.push(E * p.y + u * p.y1 + p.y2)
     }
     for (var V = 0; V < i.J.length; V++)
       O.J.push(i.J[V])
   }
   ;
-  public p_uX(O: any) {
+  public convertBezierCurveTo(O: any) {
     var i = O.b
       , p = []
       , V = []
@@ -660,27 +652,27 @@ class n {
       b: p
     }
   }
-  public p_Tj(O: any, i?: any, p?: any) {
+  public getRectOfCrds(crds: any, i?: any, p?: any) {
     if (!i)
       i = 0;
     if (!p)
-      p = O.length;
+      p = crds.length;
     var V = 99999999999
       , E = -V
       , u = 99999999999
       , F = -u;
     for (var m = i; m < p; m += 2) {
-      var y = O[m]
-        , z = O[m + 1];
+      var y = crds[m]
+        , z = crds[m + 1];
       V = Math.min(V, y);
       u = Math.min(u, z);
       E = Math.max(E, y);
       F = Math.max(F, z)
     }
-    return new R(V, u, E - V, F - u)
+    return new Rect(V, u, E - V, F - u)
   }
 
-  public p_up(O: any, i: any) {
+  public bezierCurveTo(O: any, i: any) {
     var p = O.b
       , V = []
       , E = []
@@ -709,7 +701,7 @@ class n {
         G = p[u + 4];
         J = p[u + 5];
         u += 6;
-        this.p_Ln(F, m, y, z, _, W, G, J, i, E, V, 0);
+        this.calculatorBezierCurveTo(F, m, y, z, _, W, G, J, i, E, V, 0);
         F = G;
         m = J
       } else
@@ -720,7 +712,7 @@ class n {
       b: V
     }
   }
-  public p_Ln(O: any, i: any, p: any, V: any, E: any, u: any, F: any, m: any, y: any, z: any, _: any, W: any) {
+  public calculatorBezierCurveTo(O: any, i: any, p: any, V: any, E: any, u: any, F: any, m: any, y: any, z: any, _: any, W: any) {
     var G = Math.sqrt((F - O) * (F - O) + (m - i) * (m - i))
       , J = Math.sqrt((F - E) * (F - E) + (m - u) * (m - u)) + Math.sqrt((E - p) * (E - p) + (u - V) * (u - V)) + Math.sqrt((p - O) * (p - O) + (V - i) * (V - i))
       , v = (G + J) / 2;
@@ -753,17 +745,17 @@ class n {
       x = (N + b) / 2;
       K = (g + a) / 2;
       U = (L + x) / 2;
-      this.p_Ln(O, i, D, r, g, L, K, U, y, z, _, W + 1);
-      this.p_Ln(K, U, a, x, T, b, F, m, y, z, _, W + 1)
+      this.calculatorBezierCurveTo(O, i, D, r, g, L, K, U, y, z, _, W + 1);
+      this.calculatorBezierCurveTo(K, U, a, x, T, b, F, m, y, z, _, W + 1)
     }
   }
 
-  public p_F(O: any, i: any, p: any) {
+  public mapPathCurves(O: any, i: Path, p: any) {
     for (var V = 0; V < O.length; V += 2) {
       var E = O[V]
         , u = O[V + 1];
-      p[V] = E * i.M + u * i.zh + i.$A;
-      p[V + 1] = E * i.Z + u * i.zI + i.OM
+      p[V] = E * i.x + u * i.x1 + i.x2;
+      p[V + 1] = E * i.y + u * i.y1 + i.y2
     }
   }
   ;
@@ -779,26 +771,22 @@ class n {
     }
   }
 
-  public p_iU(O: any) {
-    if (O.zk())
-      return new R(Math.floor(O.x), Math.floor(O.y), Math.ceil(O.m), Math.ceil(O.Q));
-    var i = Math.floor(O.x)
-      , p = Math.ceil(O.x + O.m)
-      , V = Math.floor(O.y)
-      , E = Math.ceil(O.y + O.Q);
-    return new R(i, V, p - i, E - V)
-  }
-
-  public p_iG(O: any) {
-    return this.p_iU(this.p_Tj(O))
+  public getRect(rect: Rect) {
+    if (rect.check())
+      return new Rect(Math.floor(rect.x), Math.floor(rect.y), Math.ceil(rect.w), Math.ceil(rect.h));
+    var x = Math.floor(rect.x)
+      , y = Math.floor(rect.y)
+      , w = Math.ceil(rect.x + rect.w)
+      , h = Math.ceil(rect.y + rect.h);
+    return new Rect(x, y, w - x, h - y)
   }
 
   public Lq_fuW(O: any, i: any, p: any, V: any) {
     for (var E = 0; E < O.length; E += 2) {
       var u = O[E]
         , F = O[E + 1]
-        , m = (u - i.x) / i.m
-        , y = (F - i.y) / i.Q
+        , m = (u - i.x) / i.w
+        , y = (F - i.y) / i.h
         , z = (1 - p) / 2
         , _ = 1 - z
         , W = z + m * (_ - z);
@@ -807,14 +795,14 @@ class n {
         , J = 1 - G
         , v = G + y * (J - G);
       m = .5 + (m - .5) * v * 2;
-      u = i.x + m * i.m;
-      F = i.y + y * i.Q;
+      u = i.x + m * i.w;
+      F = i.y + y * i.h;
       O[E] = u;
       O[E + 1] = F
     }
   }
 
-  public n_$L(O: any) {
+  public colorType(O: any) {
     var i, p = O.classID;
     if (p == "RGBC")
       i = {
@@ -823,7 +811,7 @@ class n {
         Z: O.Bl.v
       };
     else if (p == "HSBC") {
-      i = this.C$(O.H.v.val / 360, O.Strt.v / 100, O.Brgh.v / 100);
+      i = this.colorHSBC(O.H.v.val / 360, O.Strt.v / 100, O.Brgh.v / 100);
       i.j *= 255;
       i.a *= 255;
       i.Z *= 255
@@ -850,8 +838,8 @@ class n {
       console.log(O);
     return i
   }
-  
-  public C$(O: any, i: any, p: any) {
+
+  public colorHSBC(O: any, i: any, p: any) {
     var V, E, u, F, m, y, z, _;
     F = Math.floor(O * 6);
     m = O * 6 - F;
@@ -859,61 +847,61 @@ class n {
     z = p * (1 - m * i);
     _ = p * (1 - (1 - m) * i);
     switch (F % 6) {
-    case 0:
+      case 0:
         V = p,
-        E = _,
-        u = y;
+          E = _,
+          u = y;
         break;
-    case 1:
+      case 1:
         V = z,
-        E = p,
-        u = y;
+          E = p,
+          u = y;
         break;
-    case 2:
+      case 2:
         V = y,
-        E = p,
-        u = _;
+          E = p,
+          u = _;
         break;
-    case 3:
+      case 3:
         V = y,
-        E = z,
-        u = p;
+          E = z,
+          u = p;
         break;
-    case 4:
+      case 4:
         V = _,
-        E = y,
-        u = p;
+          E = y,
+          u = p;
         break;
-    case 5:
+      case 5:
         V = p,
-        E = y,
-        u = z;
+          E = y,
+          u = z;
         break
     }
     return {
-        j: V,
-        a: E,
-        Z: u
+      j: V,
+      a: E,
+      Z: u
     }
-}
+  }
 
-public U(O: any, i?: any) {
-  if (!i)
+  public U(O: any, i?: any) {
+    if (!i)
       i = !1;
-  if (!i)
+    if (!i)
       O = this.fnF(O);
-  try {
+    try {
       var p = new Uint8Array(O)
-  } catch (Ot) {
+    } catch (Ot) {
       // alert("Not enough RAM! (need " + Math.round(O / (1 << 20)) + " MB)", 7e3);
       throw Ot
+    }
+    return p
   }
-  return p
+
+  public fnF(O: any) {
+    return O + (O % 4 == 0 ? 0 : 4 - O % 4)
+  }
 }
 
-public fnF(O: any) {
-  return O + (O % 4 == 0 ? 0 : 4 - O % 4)
-}
-}
-
-export default new n();
+export default new Warp();

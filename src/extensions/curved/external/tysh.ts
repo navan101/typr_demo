@@ -1,45 +1,47 @@
-import n from './n';
-import { ND } from './ND';
-import { R } from './R';
+import warp from './warp';
+import { Path } from './path';
+import { Rect } from './rect';
+import { Txt } from './txt';
+import { Curves } from './curves';
 
-class NK {
-  public MV(O: any) {
-    return JSON.parse(JSON.stringify(O))
+class TySh {
+  public toObject(data: any) {
+    return JSON.parse(JSON.stringify(data))
   }
 
-  public Ij(O: any, i: any) {
-    for (var p in i)
-      O[p] = i[p]
+  public mapStyleSheet(sheet: any, prop: any) {
+    for (var i in prop)
+    sheet[i] = prop[i]
   }
 
-  public Cw(O: any, i: any, p: any) {
-    var V = this.fsg();
-    if (p)
-    this.dD(V, 0, 0, p);
-    var E: any = {
-      F: new ND(1, 0, 0, 1, Math.round(O), Math.round(i)),
-      mp: V
+  public initTySh(x: number, y: number, txt: Txt) {
+    const data = this.toObject(this.data);
+    if (txt)
+      this.mapData(data, 0, 0, txt);
+    var tySh: any = {
+      F: new Path(1, 0, 0, 1, Math.round(x), Math.round(y)),
+      data: data
     };
-    E.eB = this.ky();
-    E.ct = n.Lq_U();
-    E.Wr = new R;
-    return E
+    tySh.txt = this.initTxt();
+    tySh.ct = warp.initContent();
+    tySh.rect = new Rect;
+    return tySh
   }
 
-  public Hz(O: any, i?: any) {
-    if (!i)
-      i = O.Justification;
-    var p = O._Direction ? O._Direction : 0;
-    if (p == 1) {
-      if (i == 0 || i == 3)
-        i++;
-      else if (i == 1 || i == 4)
-        i--
-    }
-    return i
-  }
+  // public Hz(O: any, i?: any) {
+  //   if (!i)
+  //     i = O.Justification;
+  //   var p = O._Direction ? O._Direction : 0;
+  //   if (p == 1) {
+  //     if (i == 0 || i == 3)
+  //       i++;
+  //     else if (i == 1 || i == 4)
+  //       i--
+  //   }
+  //   return i
+  // }
 
-  public $L(O: any) {
+  public getColor(O: any) {
     var i: any = {
       j: 0,
       a: 0,
@@ -74,7 +76,7 @@ class NK {
             v: V[4] * 100
           }
         };
-        i = n.n_$L(E)
+        i = warp.colorType(E)
       } else
         console.log("Unknown color type")
     }
@@ -82,91 +84,91 @@ class NK {
   }
 
 
-  public Jx(O: any, i: any) {
+  public getRect(O: any, curves: Curves) {
     var p;
-    if (this.gW(O.mp) == 1) {
-      var V = this.x$(O.mp);
-      p = new R(0, 0, V[2] - V[0], V[3] - V[1])
+    if (this.getShapeType(O.data) == 1) {
+      var V = this.getBoxBounds(O.data);
+      p = new Rect(0, 0, V[2] - V[0], V[3] - V[1])
     } else
-      p = i.zg();
+      p = curves.locationRect();
     return p
   }
 
-  public $I(O: any) {
-    return O.EngineDict.Editor.Text.replace(/\r/g, "\n").replace(/\u0003/g, "\n")
+  public getText(data: any) {
+    return data.EngineDict.Editor.Text.replace(/\r/g, "\n").replace(/\u0003/g, "\n")
   }
 
-  public SF(O: any, i: any) {
+  public replaceCharNToCharR(O: any, i: any) {
     O.EngineDict.Editor.Text = i.replace(/\n/g, "\r")
   }
 
-  public gW(O: any) {
+  public getShapeType(O: any) {
     return O.EngineDict.Rendered.Shapes.Children[0].ShapeType
   }
 
-  public x$(O: any) {
-    return O.EngineDict.Rendered.Shapes.Children[0].Cookie.Photoshop.BoxBounds
+  public getBoxBounds(data: any) {
+    return data.EngineDict.Rendered.Shapes.Children[0].Cookie.Photoshop.BoxBounds
   }
 
-  public fsm(O: any, i: any) {
-    return this.kY(O, this.gl(O.EngineDict.StyleRun.RunLengthArray, i).jF)
+  public getStyleSheet(O: any, i: any) {
+    return this.styleSheet(O, this.mapTextLength(O.EngineDict.StyleRun.RunLengthArray, i).jF)
   }
 
-  public kY(O: any, i: any) {
+  public styleSheet(O: any, i: any) {
     var p = O.ResourceDict.StyleSheetSet[0].StyleSheetData
     var V: any = {};
     for (var E in p)
       V[E] = p[E];
     var u = O.EngineDict.StyleRun.RunArray[i].StyleSheet.StyleSheetData;
-    this.Ij(V, u);
+    this.mapStyleSheet(V, u);
     return V
   }
 
-  public z_(O: any, i: any) {
+  public getProperties(O: any, i: any) {
     var p = O.ResourceDict.ParagraphSheetSet[0].Properties
-      , V = this.MV(p)
+      , V = this.toObject(p)
       , E = O.EngineDict.ParagraphRun.RunArray[i].ParagraphSheet.Properties;
-    this.Ij(V, E);
+    this.mapStyleSheet(V, E);
     return V
   }
 
-  public xv(O: any, i: any, p: any) {
+  public mapDataRunLengthArrayInput(O: any, i: any, p: any) {
     if (p == "")
       return;
-    var V = this.$I(O);
-    this.SF(O, V.substring(0, i) + p + V.substring(i, V.length));
-    var E = this.gl(O.EngineDict.StyleRun.RunLengthArray, i - 1);
+    var V = this.getText(O);
+    this.replaceCharNToCharR(O, V.substring(0, i) + p + V.substring(i, V.length));
+    var E = this.mapTextLength(O.EngineDict.StyleRun.RunLengthArray, i - 1);
     O.EngineDict.StyleRun.RunLengthArray[E.jF] += p.length;
     var u = O.EngineDict.ParagraphRun
       , F = u.RunLengthArray
-      , m = this.gl(F, i)
+      , m = this.mapTextLength(F, i)
       , y = p.split("\n");
     if (y.length == 1) {
       F[m.jF] += p.length;
       return
     }
     F.splice(m.jF + 1, 0, F[m.jF] - (i - m.fy));
-    u.RunArray.splice(m.jF + 1, 0, this.MV(u.RunArray[m.jF]));
+    u.RunArray.splice(m.jF + 1, 0, this.toObject(u.RunArray[m.jF]));
     F[m.jF] -= F[m.jF + 1];
     F[m.jF] += y[0].length + 1;
     for (var z = 1; z < y.length - 1; z++) {
-      u.RunArray.splice(m.jF + z, 0, this.MV(u.RunArray[m.jF + z - 1]));
+      u.RunArray.splice(m.jF + z, 0, this.toObject(u.RunArray[m.jF + z - 1]));
       u.RunLengthArray.splice(m.jF + z, 0, y[z].length + 1)
     }
     F[m.jF + y.length - 1] += y[y.length - 1].length
   }
 
-  public zL(O: any, i: any, p: any) {
-    var V = this.$I(O);
-    this.SF(O, V.substring(0, i) + V.substring(p, V.length));
-    this.kf(O.EngineDict.ParagraphRun, i, p, !0);
-    this.kf(O.EngineDict.StyleRun, i, p, !1)
+  public mapDataRunLengthArray(O: any, i: any, p: any) {
+    var V = this.getText(O);
+    this.replaceCharNToCharR(O, V.substring(0, i) + V.substring(p, V.length));
+    this.addRunLengthArray(O.EngineDict.ParagraphRun, i, p, !0);
+    this.addRunLengthArray(O.EngineDict.StyleRun, i, p, !1)
   }
 
-  public kf(O: any, i: any, p: any, V: any) {
+  public addRunLengthArray(O: any, i: any, p: any, V: any) {
     var E = O.RunLengthArray
-      , u = this.gl(E, i)
-      , F = this.gl(E, p)
+      , u = this.mapTextLength(E, i)
+      , F = this.mapTextLength(E, p)
       , m = [];
     for (var y = 0; y < E.length; y++)
       for (var z = 0; z < E[y]; z++)
@@ -193,61 +195,61 @@ class NK {
     }
   }
 
-  public dD(O: any, i: any, p: any, V: any) {
-    var E = O.EngineDict.Editor.Text.length;
-    if (p == E - 2)
+  public mapData(data: any, i: any, p: any, txt: Txt) {
+    var txtlength = data.EngineDict.Editor.Text.length;
+    if (p == txtlength - 2)
       p++;
-    if (V.xC.Font != null)
-      O.ResourceDict.FontSet = V.DY.slice(0);
+    if (txt.style.Font != null)
+      data.ResourceDict.FontSet = txt.font.slice(0);
     if (i <= p)
-      this.kz(O.EngineDict.StyleRun, V.xC, i, p, !0);
-    this.kz(O.EngineDict.ParagraphRun, V.ca, i, p, !1)
+      this.mapStyle(data.EngineDict.StyleRun, txt.style, i, p, !0);
+    this.mapStyle(data.EngineDict.ParagraphRun, txt.format, i, p, !1)
   }
 
-  public kz(O: any, i: any, p: any, V: any, E: any) {
-    var u = O.RunLengthArray;
+  public mapStyle(data: any, i: any, p: any, V: any, E: any) {
+    var u = data.RunLengthArray;
     if (E) {
-      var F = this.gl(u, p);
+      var F = this.mapTextLength(u, p);
       if (F.fy != p) {
         var m = u[F.jF];
         u.splice(F.jF, 0, p - F.fy);
         u[F.jF + 1] = m - u[F.jF];
-        O.RunArray.splice(F.jF + 1, 0, this.MV(O.RunArray[F.jF]))
+        data.RunArray.splice(F.jF + 1, 0, this.toObject(data.RunArray[F.jF]))
       }
-      var y = this.gl(u, V);
+      var y = this.mapTextLength(u, V);
       if (y.fy + u[y.jF] - 1 != V) {
         var m = u[y.jF];
         u.splice(y.jF, 0, V - y.fy + 1);
         u[y.jF + 1] = m - u[y.jF];
-        O.RunArray.splice(y.jF + 1, 0, this.MV(O.RunArray[y.jF]))
+        data.RunArray.splice(y.jF + 1, 0, this.toObject(data.RunArray[y.jF]))
       }
     }
-    var F = this.gl(u, p)
-      , y = this.gl(u, V);
+    var F = this.mapTextLength(u, p)
+      , y = this.mapTextLength(u, V);
     if (E)
       for (var z = F.jF; z <= y.jF; z++)
-        this.Ij(O.RunArray[z].StyleSheet.StyleSheetData, i);
+        this.mapStyleSheet(data.RunArray[z].StyleSheet.StyleSheetData, i);
     else
       for (var z = F.jF; z <= y.jF; z++)
-        this.Ij(O.RunArray[z].ParagraphSheet.Properties, i)
+        this.mapStyleSheet(data.RunArray[z].ParagraphSheet.Properties, i)
   }
 
 
-  public yN(O: any, i: any) {
+  public mapTxtPoint(txt: Txt, i: any) {
     var p, V;
     p = ["FontSize", "Leading", "BaselineShift"];
-    V = O.xC;
+    V = txt.style;
     for (var E = 0; E < p.length; E++)
       if (V[p[E]] != null)
         V[p[E]] *= i;
     p = ["StartIndent", "EndIndent", "FirstLineIndent", "SpaceBefore", "SpaceAfter"];
-    V = O.ca;
+    V = txt.format;
     for (var E = 0; E < p.length; E++)
       if (V[p[E]] != null)
         V[p[E]] *= i
   }
 
-  public ky() {
+  public initTxt() {
     return {
       classID: "TxLr",
       Txt: {
@@ -279,7 +281,7 @@ class NK {
     }
   }
 
-  public gl(O: any, i: any) {
+  public mapTextLength(O: any, i: any) {
     var p = 0
       , V = 0;
     while (p + O[V] <= i) {
@@ -292,12 +294,16 @@ class NK {
     }
   }
 
-  public fsg() {
-    var O = this.MV(this.kO);
-    return O
+  public point(O: any) {
+    var i: Path = O.clone()
+      , p = Math.atan2(-i.y, i.x)
+      , V = new Path;
+    V.rotate(-p);
+    i.concat(V);
+    return (Math.abs(i.x) + Math.abs(i.y1)) / 2
   }
 
-  public kN: any = {
+  public sheet: any = {
     Justification: 0,
     FirstLineIndent: 0,
     StartIndent: 0,
@@ -322,7 +328,7 @@ class NK {
     _Direction: 0
   }
 
-  public fsb: any = {
+  public style: any = {
     Font: 0,
     FontSize: 12,
     FauxBold: !1,
@@ -365,7 +371,7 @@ class NK {
     DiacriticPos: 2
   }
 
-  public kO: any = {
+  public data: any = {
     EngineDict: {
       Editor: {
         Text: "\n"
@@ -384,7 +390,7 @@ class NK {
         RunArray: [{
           ParagraphSheet: {
             DefaultStyleSheet: 0,
-            Properties: JSON.parse(JSON.stringify(this.kN))
+            Properties: JSON.parse(JSON.stringify(this.sheet))
           },
           Adjustments: {
             Axis: [1, 0, 1],
@@ -485,11 +491,11 @@ class NK {
       ParagraphSheetSet: [{
         Name: "Normal RGB",
         DefaultStyleSheet: 0,
-        Properties: JSON.parse(JSON.stringify(this.kN))
+        Properties: JSON.parse(JSON.stringify(this.sheet))
       }],
       StyleSheetSet: [{
         Name: "Normal RGB",
-        StyleSheetData: JSON.parse(JSON.stringify(this.fsb))
+        StyleSheetData: JSON.parse(JSON.stringify(this.style))
       }],
       FontSet: [{
         Name: "DejaVuSans",
@@ -516,4 +522,4 @@ class NK {
   }
 }
 
-export default new NK();
+export default new TySh();

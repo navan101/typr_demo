@@ -1,5 +1,5 @@
-export class Aq {
-  public DY: any = [
+export class Txt {
+  public font: any = [
     {
       Name: "DejaVuSans",
       Script: 0,
@@ -19,9 +19,9 @@ export class Aq {
       Synthetic: 0
     }
   ]
-  public xC: any = {
+  public style: any = {
     Font: 0,
-    FontSize: 48,
+    FontSize: 24,
     FauxBold: false,
     FauxItalic: false,
     AutoLeading: true,
@@ -71,7 +71,7 @@ export class Aq {
     Kashid: 1,
     DiacriticPos: 2
   }
-  public ca: any = {
+  public format: any = {
     Justification: 0,
     FirstLineIndent: 0,
     StartIndent: 0,

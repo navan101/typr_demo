@@ -1,0 +1,645 @@
+{
+  "ca": [
+    {
+      "nY": [
+        {
+          "Og": false,
+          "kE": false,
+          "start": 0,
+          "end": 4,
+          "rect": {
+            "x": 0,
+            "y": -151.96,
+            "m": 233.966,
+            "Q": 151.96
+          },
+          "rd": {
+            "x": 0,
+            "y": -142.188972,
+            "m": 233.966,
+            "Q": 279.47697200000005
+          },
+          "kP": {
+            "x": 0,
+            "y": 0
+          },
+          "NU": 96.02300000000001,
+          "lineHeight": 193.88,
+          "TB": 151.96,
+          "Ti": 41.92
+        }
+      ],
+      "_x": [
+        {
+          "start": 0,
+          "end": 1,
+          "rect": {
+            "x": 0,
+            "y": -151.96,
+            "m": 233.966,
+            "Q": 151.96
+          },
+          "rd": {
+            "x": 0,
+            "y": -142.188972,
+            "m": 233.966,
+            "Q": 279.47697200000005
+          },
+          "kP": {
+            "x": 0,
+            "y": 0
+          },
+          "NU": 96.02300000000001,
+          "lineHeight": 193.88,
+          "TB": 151.96,
+          "Ti": 41.92,
+          "qd": true
+        }
+      ],
+      "rect": {
+        "x": 0,
+        "y": -151.96,
+        "m": 233.966,
+        "Q": 151.96
+      },
+      "rd": {
+        "x": 0,
+        "y": -142.188972,
+        "m": 233.966,
+        "Q": 279.47697200000005
+      },
+      "kP": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "fYr": 0,
+  "ffx": false,
+  "rect": {
+    "Q": 0,
+    "m": 0,
+    "x": 0,
+    "y": 0
+  },
+  "xC": [
+    {
+      "zn": "n",
+      "$X": {
+        "Font": 5,
+        "FontSize": 131,
+        "FauxBold": false,
+        "FauxItalic": false,
+        "AutoLeading": true,
+        "Leading": 0,
+        "HorizontalScale": 1,
+        "VerticalScale": 1,
+        "Tracking": 0,
+        "AutoKerning": true,
+        "Kerning": 0,
+        "BaselineShift": 0,
+        "FontCaps": 0,
+        "FontBaseline": 0,
+        "Underline": false,
+        "Strikethrough": false,
+        "Ligatures": true,
+        "DLigatures": false,
+        "BaselineDirection": 2,
+        "Tsume": 0,
+        "StyleRunAlignment": 2,
+        "Language": 0,
+        "NoBreak": false,
+        "FillColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0.10196078431372549,
+            0.10196078431372549,
+            0.10196078431372549
+          ]
+        },
+        "StrokeColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "FillFlag": true,
+        "StrokeFlag": false,
+        "FillFirst": true,
+        "YUnderline": 1,
+        "OutlineWidth": 1,
+        "CharacterDirection": 0,
+        "HindiNumbers": false,
+        "Kashida": 1,
+        "DiacriticPos": 2
+      },
+      "yd": 78,
+      "path": {
+        "J": [
+          "M",
+          "L",
+          "L",
+          "C",
+          "C",
+          "L",
+          "L",
+          "L",
+          "C",
+          "C",
+          "L",
+          "L",
+          "L",
+          "Z"
+        ],
+        "b": [
+          92,
+          0,
+          183,
+          0,
+          183,
+          394,
+          238,
+          449,
+          276,
+          477,
+          332,
+          477,
+          404,
+          477,
+          435,
+          434,
+          435,
+          332,
+          435,
+          0,
+          526,
+          0,
+          526,
+          344,
+          526,
+          483,
+          474,
+          557,
+          360,
+          557,
+          286,
+          557,
+          230,
+          516,
+          178,
+          465,
+          175,
+          465,
+          167,
+          543,
+          92,
+          543
+        ]
+      },
+      "rect": {
+        "x": 0,
+        "y": -151.96,
+        "m": 80.041,
+        "Q": 151.96
+      },
+      "rd": {
+        "x": 0,
+        "y": -142.188972,
+        "m": 80.041,
+        "Q": 279.47697200000005
+      },
+      "kP": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1
+      },
+      "NU": 96.02300000000001,
+      "lineHeight": 193.88,
+      "TB": 151.96,
+      "Ti": 41.92,
+      "TN": 0,
+      "BC": 0
+    },
+    {
+      "zn": "a",
+      "$X": {
+        "Font": 5,
+        "FontSize": 131,
+        "FauxBold": false,
+        "FauxItalic": false,
+        "AutoLeading": true,
+        "Leading": 0,
+        "HorizontalScale": 1,
+        "VerticalScale": 1,
+        "Tracking": 0,
+        "AutoKerning": true,
+        "Kerning": 0,
+        "BaselineShift": 0,
+        "FontCaps": 0,
+        "FontBaseline": 0,
+        "Underline": false,
+        "Strikethrough": false,
+        "Ligatures": true,
+        "DLigatures": false,
+        "BaselineDirection": 2,
+        "Tsume": 0,
+        "StyleRunAlignment": 2,
+        "Language": 0,
+        "NoBreak": false,
+        "FillColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0.10196078431372549,
+            0.10196078431372549,
+            0.10196078431372549
+          ]
+        },
+        "StrokeColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "FillFlag": true,
+        "StrokeFlag": false,
+        "FillFirst": true,
+        "YUnderline": 1,
+        "OutlineWidth": 1,
+        "CharacterDirection": 0,
+        "HindiNumbers": false,
+        "Kashida": 1,
+        "DiacriticPos": 2
+      },
+      "yd": 65,
+      "path": {
+        "J": [
+          "M",
+          "C",
+          "L",
+          "L",
+          "L",
+          "L",
+          "C",
+          "C",
+          "L",
+          "C",
+          "C",
+          "C",
+          "C",
+          "Z",
+          "M",
+          "C",
+          "C",
+          "L",
+          "C",
+          "Z"
+        ],
+        "b": [
+          217,
+          -13,
+          284,
+          -13,
+          345,
+          22,
+          397,
+          65,
+          400,
+          65,
+          408,
+          0,
+          483,
+          0,
+          483,
+          334,
+          483,
+          468,
+          427,
+          557,
+          295,
+          557,
+          208,
+          557,
+          131,
+          518,
+          81,
+          486,
+          117,
+          423,
+          160,
+          452,
+          217,
+          481,
+          280,
+          481,
+          369,
+          481,
+          392,
+          414,
+          392,
+          344,
+          161,
+          318,
+          58,
+          259,
+          58,
+          141,
+          58,
+          43,
+          126,
+          -13,
+          217,
+          -13,
+          243,
+          60,
+          189,
+          60,
+          147,
+          85,
+          147,
+          147,
+          147,
+          217,
+          209,
+          262,
+          392,
+          284,
+          392,
+          132,
+          339,
+          85,
+          296,
+          60,
+          243,
+          60
+        ]
+      },
+      "rect": {
+        "x": 0,
+        "y": -151.96,
+        "m": 73.884,
+        "Q": 151.96
+      },
+      "rd": {
+        "x": 0,
+        "y": -142.188972,
+        "m": 73.884,
+        "Q": 279.47697200000005
+      },
+      "kP": {
+        "x": 80.041,
+        "y": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1
+      },
+      "NU": 96.02300000000001,
+      "lineHeight": 193.88,
+      "TB": 151.96,
+      "Ti": 41.92,
+      "TN": 0,
+      "BC": 1
+    },
+    {
+      "zn": "n",
+      "$X": {
+        "Font": 5,
+        "FontSize": 131,
+        "FauxBold": false,
+        "FauxItalic": false,
+        "AutoLeading": true,
+        "Leading": 0,
+        "HorizontalScale": 1,
+        "VerticalScale": 1,
+        "Tracking": 0,
+        "AutoKerning": true,
+        "Kerning": 0,
+        "BaselineShift": 0,
+        "FontCaps": 0,
+        "FontBaseline": 0,
+        "Underline": false,
+        "Strikethrough": false,
+        "Ligatures": true,
+        "DLigatures": false,
+        "BaselineDirection": 2,
+        "Tsume": 0,
+        "StyleRunAlignment": 2,
+        "Language": 0,
+        "NoBreak": false,
+        "FillColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0.10196078431372549,
+            0.10196078431372549,
+            0.10196078431372549
+          ]
+        },
+        "StrokeColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "FillFlag": true,
+        "StrokeFlag": false,
+        "FillFirst": true,
+        "YUnderline": 1,
+        "OutlineWidth": 1,
+        "CharacterDirection": 0,
+        "HindiNumbers": false,
+        "Kashida": 1,
+        "DiacriticPos": 2
+      },
+      "yd": 78,
+      "path": {
+        "J": [
+          "M",
+          "L",
+          "L",
+          "C",
+          "C",
+          "L",
+          "L",
+          "L",
+          "C",
+          "C",
+          "L",
+          "L",
+          "L",
+          "Z"
+        ],
+        "b": [
+          92,
+          0,
+          183,
+          0,
+          183,
+          394,
+          238,
+          449,
+          276,
+          477,
+          332,
+          477,
+          404,
+          477,
+          435,
+          434,
+          435,
+          332,
+          435,
+          0,
+          526,
+          0,
+          526,
+          344,
+          526,
+          483,
+          474,
+          557,
+          360,
+          557,
+          286,
+          557,
+          230,
+          516,
+          178,
+          465,
+          175,
+          465,
+          167,
+          543,
+          92,
+          543
+        ]
+      },
+      "rect": {
+        "x": 0,
+        "y": -151.96,
+        "m": 80.041,
+        "Q": 151.96
+      },
+      "rd": {
+        "x": 0,
+        "y": -142.188972,
+        "m": 80.041,
+        "Q": 279.47697200000005
+      },
+      "kP": {
+        "x": 153.925,
+        "y": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1
+      },
+      "NU": 96.02300000000001,
+      "lineHeight": 193.88,
+      "TB": 151.96,
+      "Ti": 41.92,
+      "TN": 0,
+      "BC": 2
+    },
+    {
+      "zn": "\n",
+      "$X": {
+        "Font": 5,
+        "FontSize": 131,
+        "FauxBold": false,
+        "FauxItalic": false,
+        "AutoLeading": true,
+        "Leading": 0,
+        "HorizontalScale": 1,
+        "VerticalScale": 1,
+        "Tracking": 0,
+        "AutoKerning": true,
+        "Kerning": 0,
+        "BaselineShift": 0,
+        "FontCaps": 0,
+        "FontBaseline": 0,
+        "Underline": false,
+        "Strikethrough": false,
+        "Ligatures": true,
+        "DLigatures": false,
+        "BaselineDirection": 2,
+        "Tsume": 0,
+        "StyleRunAlignment": 2,
+        "Language": 0,
+        "NoBreak": false,
+        "FillColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0.10196078431372549,
+            0.10196078431372549,
+            0.10196078431372549
+          ]
+        },
+        "StrokeColor": {
+          "Type": 1,
+          "Values": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "FillFlag": true,
+        "StrokeFlag": false,
+        "FillFirst": true,
+        "YUnderline": 1,
+        "OutlineWidth": 1,
+        "CharacterDirection": 0,
+        "HindiNumbers": false,
+        "Kashida": 1,
+        "DiacriticPos": 2
+      },
+      "yd": -1,
+      "path": {
+        "J": [],
+        "b": []
+      },
+      "rect": {
+        "x": 0,
+        "y": -151.96,
+        "m": 0,
+        "Q": 151.96
+      },
+      "rd": {
+        "x": 0,
+        "y": -142.188972,
+        "m": 0,
+        "Q": 279.47697200000005
+      },
+      "kP": {
+        "x": 233.966,
+        "y": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1
+      },
+      "NU": 96.02300000000001,
+      "lineHeight": 193.88,
+      "TB": 151.96,
+      "Ti": 41.92,
+      "TN": 0,
+      "BC": 3
+    }
+  ]
+}

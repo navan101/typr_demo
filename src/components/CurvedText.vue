@@ -35,10 +35,10 @@ export default {
       // load("fonts/LiberationSans-Bold.ttf", fontLoaded);
 
       const text1 = new fabric.CJCurvedText('nguyen anh van', {
-        top: 100,
-        left: 100,
+        top: 400,
+        left: 400,
         fontSize: 48,
-        fontFamily: 'LiberationSans-Bold',
+        fontFamily: 'DejaVuSans',
         textAlign: 'center'
       })
       // @ts-ignore
