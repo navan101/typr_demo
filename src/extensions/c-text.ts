@@ -58,51 +58,17 @@ const CText = fabric.util.createClass(fabric.IText, {
       const textPath = this._caculatePathCurve(box, this.curvedType || 'circle', this.degrees || 90, this.fontSize);
       const path = new fabric.Path(`${textPath}`);
       // @ts-ignore
-      // if (this.curvedType === 'arc' && this.degrees >= 0) {
-      //   // @ts-ignore
-      //   path.height += Math.sqrt(this.degrees) + this.fontSize / 2;
-      //   // @ts-ignore
-      //   // eslint-disable-next-line max-len
-      //   path.width += this.degrees > 130 ? Math.sqrt(this.degrees) + this.fontSize : this.degrees > 80 ? Math.sqrt(this.degrees) + this.fontSize / 2 : Math.sqrt(this.degrees);
-      //   // @ts-ignore
-      //   path.pathOffset.y -= this.degrees > 130 ? Math.sqrt(this.degrees) + this.fontSize / 8 : Math.sqrt(this.degrees) + this.fontSize / 4;
-      //   // @ts-ignore
-      // } else if (this.curvedType === 'arc') {
-      //   //   // @ts-ignore
-      //   //   path.height +=  Math.sqrt(Math.abs(this.degrees)) + this.fontSize / 2;
-      //   //   console.log(path)
-      //   // @ts-ignore
-      //   // eslint-disable-next-line max-len
-      //   path.height += Math.abs(this.degrees > 100) ? Math.sqrt(Math.abs(this.degrees)) : Math.sqrt(Math.abs(this.degrees)) + this.fontSize / 2;
-      //   // @ts-ignore
-      //   // eslint-disable-next-line max-len
-      //   // path.width += Math.abs(this.degrees) > 130 ? Math.sqrt(Math.abs(this.degrees)) + this.fontSize : Math.abs(this.degrees) > 80 ? Math.sqrt(Math.abs(this.degrees)) + this.fontSize / 2 : Math.sqrt(Math.abs(this.degrees));
-      //   // @ts-ignore
-      //   // eslint-disable-next-line max-len
-      //   // path.pathOffset.y -= Math.abs(this.degrees) > 130 ? Math.sqrt(Math.abs(this.degrees)) + this.fontSize / 2 : Math.sqrt(Math.abs(this.degrees)) + this.fontSize / 4;
-      // }
+      // path.left += 100;
+      // path.segmentsInfo[6].x += 10;
+      // @ts-ignore
+      console.log(path)
+      path.width += this.fontSize
+      path.height += this.fontSize
       // @ts-ignore
       this.set('path', path);
       const charSpacing = this._spacingOperation(ctx, this.curvedType || 'circle', this.fontSize);
       this.set('charSpacing', charSpacing);
-      // if (this.curvedType === 'circle') {
-      //   // @ts-ignore
-      //   this.height += this.uppercase ? this.fontSize * 1.5 : this.fontSize * 1.1;
-      //   // @ts-ignore
-      //   this.width += this.uppercase ? this.fontSize * 1.5 : this.fontSize * 1.1;
-      // } else {
-      //   // @ts-ignore
-      //   //this.height += this.uppercase ? this.fontSize : this.fontSize;
-      //   // @ts-ignore
-      //   //this.width += this.uppercase ? this.fontSize : this.fontSize;
-      //   //console.log(this, 'this')
-      //   // this.x
-      //   // console.log(this.lineHeight)
-      //   // console.log(this.linethrough)
-      //   // this.lineHeight = 100;
-      //   // @ts-ignore
-      //   // this.width += this.uppercase ? this.fontSize : this.fontSize;
-      // }
+      
       this.canvas.requestRenderAll();
     }
   },
@@ -124,8 +90,9 @@ const CText = fabric.util.createClass(fabric.IText, {
     let r = w;
     switch (curvedType) {
       case 'circle':
-        x = x + (w / 2) + 100;
+        x = x + (w / 2);
         y = y + (h / 2);
+        w = w - fontSize;
         r = (w / 2);
         d = [
           'M ' + x + ', ' + y,
