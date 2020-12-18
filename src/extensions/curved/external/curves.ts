@@ -4,6 +4,7 @@ import { Rect } from './rect';
 import { Typr, TyprU } from 'typr-ts';
 import * as UnicodeBidirectional from 'unicode-bidirectional';
 import { Char } from './char';
+import tysh from './tysh';
 
 export class Curves {
   public _curves: any;
@@ -233,7 +234,6 @@ export class Curves {
   }
 
   public mapCurves(data: any, listChar: any, lengthArray: any, box: any) {
-    debugger
     this.nY = [];
     this._x = [];
     this.rect = new Rect;
@@ -243,8 +243,8 @@ export class Curves {
       , runLengthArray = data.EngineDict.ParagraphRun.RunLengthArray
       , length = 0
       , j = 0
-      // , b = 0
-      // , g = 0
+      , b = 0
+      , g = 0
       , o = 0;
     for (var i = 0; i < lengthArray; i++)
       length += runLengthArray[i];
@@ -263,29 +263,29 @@ export class Curves {
       r = UnicodeBidirectional.resolve(v, _);
     for (var i = 0; i < v.length; i++)
       listChar[length + i].TN = r[i] & 1;
-    // var listCharSpaceAndEnter = this.getListCharSpaceAndEnter(listChar, length, length + runLengthArray[lengthArray])
-    //   , N = this.Si(listCharSpaceAndEnter, box, prop)[0]
-    // let T: any = [];
-    // for (var L = 0; L < N.length; L++) {
-    //   var a = g;
-    //   for (var z = 0; z < N[L]; z++) {
-    //     var x = listCharSpaceAndEnter[b + z];
-    //     // @ts-ignore
-    //     g += x.end - x.start
-    //   }
-    //   T.push(g);
-    //   var K = r.slice(a, g)
-    //     , U = UnicodeBidirectional.reorderPermutation(K)
-    //     , Y = listChar.slice(length + a, length + g);
-    //   if (U.length == Y.length)
-    //     for (var z = 0; z < Y.length; z++)
-    //       listChar[length + a + z] = Y[U[z]];
-    //   b += N[L]
-    // }
+    var listCharSpaceAndEnter = this.getListCharSpaceAndEnter(listChar, length, length + runLengthArray[lengthArray])
+      , N = this.Si(listCharSpaceAndEnter, box, prop)[0]
+    let T: any = [];
+    for (var L = 0; L < N.length; L++) {
+      var a = g;
+      for (var z = 0; z < N[L]; z++) {
+        var x = listCharSpaceAndEnter[b + z];
+        // @ts-ignore
+        g += x.end - x.start
+      }
+      T.push(g);
+      var K = r.slice(a, g)
+        , U = UnicodeBidirectional.reorderPermutation(K)
+        , Y = listChar.slice(length + a, length + g);
+      if (U.length == Y.length)
+        for (var z = 0; z < Y.length; z++)
+          listChar[length + a + z] = Y[U[z]];
+      b += N[L]
+    }
     this.nY = this.getListCharSpaceAndEnter(listChar, length, length + runLengthArray[lengthArray]);
     var $ = this.Si(this.nY, box, prop)
       , N = $[0]
-      // , e = $[1];
+      , e = $[1];
     for (var i = 0; i < N.length; i++) {
       var d = {
         start: o,
@@ -302,54 +302,54 @@ export class Curves {
       this._x.push(d);
       o += N[i];
       d.end = o;
-      // var Z = d.end == this.nY.length
-      //   , I = e[L]
-      //   , S = Tysh.Hz(prop);
-      // if (box && S > 2 && (S == 6 || !Z))
-      //   this.fwC(d, this.nY, listChar, I, _);
-      // for (var z = d.start; z < d.end; z++) {
-      //   var H = this.nY[z].rect.clone();
-      //   H.setOffset(this.nY[z].loca);
-      //   d.rect = d.rect.getRect(H);
-      //   var q = this.nY[z].rd.clone();
-      //   q.setOffset(this.nY[z].loca);
-      //   d.rd = d.rd.getRect(q);
-      //   d.NU = Math.max(d.NU, this.nY[z].NU);
-      //   d.lineHeight = Math.max(d.lineHeight, this.nY[z].lineHeight);
-      //   d.TB = Math.max(d.TB, this.nY[z].TB);
-      //   d.Ti = Math.max(d.Ti, this.nY[z].Ti)
-      // }
-      // if (box) {
-      //   var w = this.lineWidth(d, this.nY, _);
-      //   d.loca.x = 0;
-      //   if (S == 1 || Z && S == 4)
-      //     d.loca.x = w[1] + (I - w[0]);
-      //   if (S == 2 || Z && S == 5)
-      //     d.loca.x = w[1] + (I - w[0]) / 2;
-      //   if (this._x.length == 1)
-      //     d.loca.x += prop.FirstLineIndent;
-      //   d.loca.x += prop.StartIndent
-      // } else {
-      //   if (S == 0)
-      //     d.loca.x = prop.StartIndent + prop.FirstLineIndent;
-      //   if (S == 1)
-      //     d.loca.x = -d.rect.w - prop.EndIndent;
-      //   if (S == 2)
-      //     d.loca.x = -d.rect.w / 2
-      // }
-      // if (this._x.length == 1)
-      //   d.loca.y = 0;
-      // else
-      //   d.loca.y = this._x[this._x.length - 2].loca.y + Math.max(this._x[this._x.length - 2].Ti + d.TB, d.lineHeight)
+      var Z = d.end == this.nY.length
+        , I = e[L]
+        , S = tysh.Hz(prop);
+      if (box && S > 2 && (S == 6 || !Z))
+        this.fwC(d, this.nY, listChar, I, _);
+      for (var z = d.start; z < d.end; z++) {
+        var H = this.nY[z].rect.clone();
+        H.setOffset(this.nY[z].loca);
+        d.rect = d.rect.getRect(H);
+        var q = this.nY[z].rd.clone();
+        q.setOffset(this.nY[z].loca);
+        d.rd = d.rd.getRect(q);
+        d.NU = Math.max(d.NU, this.nY[z].NU);
+        d.lineHeight = Math.max(d.lineHeight, this.nY[z].lineHeight);
+        d.TB = Math.max(d.TB, this.nY[z].TB);
+        d.Ti = Math.max(d.Ti, this.nY[z].Ti)
+      }
+      if (box) {
+        var w = this.lineWidth(d, this.nY, _);
+        d.loca.x = 0;
+        if (S == 1 || Z && S == 4)
+          d.loca.x = w[1] + (I - w[0]);
+        if (S == 2 || Z && S == 5)
+          d.loca.x = w[1] + (I - w[0]) / 2;
+        if (this._x.length == 1)
+          d.loca.x += prop.FirstLineIndent;
+        d.loca.x += prop.StartIndent
+      } else {
+        if (S == 0)
+          d.loca.x = prop.StartIndent + prop.FirstLineIndent;
+        if (S == 1)
+          d.loca.x = -d.rect.w - prop.EndIndent;
+        if (S == 2)
+          d.loca.x = -d.rect.w / 2
+      }
+      if (this._x.length == 1)
+        d.loca.y = 0;
+      else
+        d.loca.y = this._x[this._x.length - 2].loca.y + Math.max(this._x[this._x.length - 2].Ti + d.TB, d.lineHeight)
     }
-    // for (var z = 0; z < this._x.length; z++) {
-    //   var C = this._x[z].rect.clone();
-    //   C.setOffset(this._x[z].loca);
-    //   this.rect = this.rect.getRect(C);
-    //   var Q = this._x[z].rd.clone();
-    //   Q.setOffset(this._x[z].loca);
-    //   this.rd = this.rd.getRect(Q)
-    // }
+    for (var z = 0; z < this._x.length; z++) {
+      var C = this._x[z].rect.clone();
+      C.setOffset(this._x[z].loca);
+      this.rect = this.rect.getRect(C);
+      var Q = this._x[z].rd.clone();
+      Q.setOffset(this._x[z].loca);
+      this.rd = this.rd.getRect(Q)
+    }
     return this;
   }
 
@@ -433,44 +433,44 @@ export class Curves {
     return [V, E]
   }
 
-  // public fwC(O: any, i: any, p: any, V: any, E: any) {
-  //   var u = 0
-  //     , F = 0
-  //     , m = 0
-  //     , y = 0;
-  //   for (var z = O.start; z < O.end; z++)
-  //     if (i[z].Og)
-  //       m++;
-  //     else {
-  //       u += i[z].rect.w;
-  //       F++
-  //     }
-  //   if (E == 0)
-  //     for (var z: any = O.end - 1; z >= O.start; z--)
-  //       if (i[z].Og || i[z].kE) {
-  //         if (i[z].Og) {
-  //           m--
-  //         }
-  //       } else
-  //         break;
-  //   if (E == 1)
-  //     for (var z = O.start; z < O.end; z++)
-  //       if (i[z].Og || i[z].kE) {
-  //         if (i[z].Og) {
-  //           m--;
-  //           y++
-  //         }
-  //       } else
-  //         break;
-  //   if (F <= 1 || m == 0)
-  //     return;
-  //   var _ = (V - u) / m
-  //     , W = -y * _;
-  //   for (var z = O.start; z < O.end; z++) {
-  //     if (i[z].Og)
-  //       p[i[z].start].rect.w = i[z].rect.w = _;
-  //     i[z].loca.x = W;
-  //     W += i[z].rect.w
-  //   }
-  // }
+  public fwC(O: any, i: any, p: any, V: any, E: any) {
+    var u = 0
+      , F = 0
+      , m = 0
+      , y = 0;
+    for (var z = O.start; z < O.end; z++)
+      if (i[z].Og)
+        m++;
+      else {
+        u += i[z].rect.w;
+        F++
+      }
+    if (E == 0)
+      for (var z: any = O.end - 1; z >= O.start; z--)
+        if (i[z].Og || i[z].kE) {
+          if (i[z].Og) {
+            m--
+          }
+        } else
+          break;
+    if (E == 1)
+      for (var z = O.start; z < O.end; z++)
+        if (i[z].Og || i[z].kE) {
+          if (i[z].Og) {
+            m--;
+            y++
+          }
+        } else
+          break;
+    if (F <= 1 || m == 0)
+      return;
+    var _ = (V - u) / m
+      , W = -y * _;
+    for (var z = O.start; z < O.end; z++) {
+      if (i[z].Og)
+        p[i[z].start].rect.w = i[z].rect.w = _;
+      i[z].loca.x = W;
+      W += i[z].rect.w
+    }
+  }
 }

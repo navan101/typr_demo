@@ -304,6 +304,26 @@ class Warp {
             , Y = (4 - K) * (1 / 3)
             , $ = (1 - K) * (3 - K) / (3 * U)
             , e = -T * J + Y * a;
+            if (p == "warpCircle") {
+              j = Math.sin(L) * x;
+              r = (T * J - Math.cos(g) * x + v);
+              D = Math.sin(L) * a;
+              P = (T * J - Math.cos(g) * a + v);
+              if (m == 1 || m == 2) {
+                j = m == 1 ? (-$ * x) : ($ * x);
+                D = m == 1 ? (-$ * a) : ($ * a);
+                r = (T * J + v - Y * x);
+                P = (T * J + v - Y * a);
+              }
+              // if (V < 0) {
+              //   var o = j;
+              //   j = D;
+              //   D = o;
+              //   o = r;
+              //   r = -P;
+              //   P = -o
+              // }
+            }
           if (p == "warpArc") {
             j = Math.sin(L) * x;
             r = T * J - Math.cos(g) * x + v;

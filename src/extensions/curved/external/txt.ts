@@ -21,7 +21,7 @@ export class Txt {
   ]
   public style: any = {
     Font: 0,
-    FontSize: 24,
+    FontSize: 32,
     FauxBold: false,
     FauxItalic: false,
     AutoLeading: true,

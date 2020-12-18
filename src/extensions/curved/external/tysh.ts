@@ -28,18 +28,18 @@ class TySh {
     return tySh
   }
 
-  // public Hz(O: any, i?: any) {
-  //   if (!i)
-  //     i = O.Justification;
-  //   var p = O._Direction ? O._Direction : 0;
-  //   if (p == 1) {
-  //     if (i == 0 || i == 3)
-  //       i++;
-  //     else if (i == 1 || i == 4)
-  //       i--
-  //   }
-  //   return i
-  // }
+  public Hz(O: any, i?: any) {
+    if (!i)
+      i = O.Justification;
+    var p = O._Direction ? O._Direction : 0;
+    if (p == 1) {
+      if (i == 0 || i == 3)
+        i++;
+      else if (i == 1 || i == 4)
+        i--
+    }
+    return i
+  }
 
   public getColor(O: any) {
     var i: any = {
